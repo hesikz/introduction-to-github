@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+// Parent class Person
+class Person {
+protected:
+    string name;
+    int age;
+public:
+    Person(string n, int a) : name(n), age(a) {}
+
+    string GetName() {
+        return name;
+    }
+
+    int GetAge() {
+        return age;
+    }
+};
+
+// Student class inheriting publicly from Person
+class Student : public Person {
+private:
+    double Avg;
+public:
+    Student(string n, int a, double avg) : Person(n, a), Avg(avg) {}
+
+    double GetAvg() {
+        return Avg;
+    }
+
+    string GetStudentName() {
+        return GetName();
+    }
+};
+
+// Teacher class inheriting publicly from Person
+class TeacherPublic : public Person {
+private:
+    double salary;
+public:
+    TeacherPublic(string n, int a, double s) : Person(n, a), salary(s) {}
+
+    double GetSalary() {
+        return salary;
+    }
+};
+
+// Teacher class inheriting privately from Person
+class TeacherPrivate : private Person {
+private:
+    double salary;
+public:
+    TeacherPrivate(string n, int a, double s) : Person(n, a), salary(s) {}
+
+    double GetSalary() {
+        return salary;
+    }
+
+    string GetTeacherName() {
+        return name; // Accessible due to private inheritance
+    }
+
+    int GetTeacherAge() {
+        return age; // Accessible due to private inheritance
+    }
+};
+
+int main() {
+    Student s("Alice", 20, 85.5);
+    TeacherPublic tp("Mr. John", 40, 5000);
+    TeacherPrivate tpr("Dr. Smith", 45, 7000);
+
+    cout << "Student Name: " << s.GetStudentName() << endl;
+    cout << "Student Age: " << s.GetAge() << endl;
+    cout << "Student Avg: " << s.GetAvg() << endl;
+
+    cout << "Public Teacher Name: " << tp.GetName() << endl;
+    cout << "Public Teacher Age: " << tp.GetAge() << endl;
+    cout << "Public Teacher Salary: " << tp.GetSalary() << endl;
+
+    cout << "Private Teacher Name: " << tpr.GetTeacherName() << endl;
+    cout << "Private Teacher Age: " << tpr.GetTeacherAge() << endl;
+    cout << "Private Teacher Salary: " << tpr.GetSalary() << endl;
+
+    return 0;
+}
